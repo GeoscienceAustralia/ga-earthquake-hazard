@@ -11,16 +11,19 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import matplotlib.image as image
 import numpy as np
-#import matplotlib.style
-#import matplotlib as mpl
-#mpl.style.use('bmh')
+import cartopy.crs as ccrs
+import cartopy.feature
 
+from palettable.colorbrewer.qualitative import Set1_5
 
-colors = ('#A7414A', '#6A8A82', '#A37C27')
-#colors = ('#8B281F', '#D57030', '#9BA747')
-#colors = ('#F2A104', '#00743F', '#72A2C0')
-          
-hist_file = 'rlz-0-SA(0.2)-sid-0-poe-0_Mag_Dist_Eps_1.csv'
+colors = Set1_5.hex_colors
+
+hist_file = 'rlz-34-SA(2.0)-sid-0-poe-0_Mag_Dist_Eps_1.csv'
+site = [130.83, -12.45]
+
+#some plotting flags.  
+GA_logo = False
+Inset_map = False
           
 def main():
     
@@ -30,10 +33,14 @@ def main():
     ranks, zmax = define_camera(xpos, ypos, zsum, ax)
     set_zaxes(zsum, ax)
     plot_bars(mag, dist, p_norm, epsilons, ax, dx, dy, ranks, zmax)
-    add_GA_logo(fig)
+    
+    if GA_logo:
+        add_GA_logo(fig)
+    if Inset_map:
+        add_inset_map(fig,site)
     
     fig.savefig('samplefigure2_2',bbox_inches='tight',dpi=240)
-    plt.show()
+    #plt.show()
           
     
 ###############################################################################
@@ -129,7 +136,7 @@ def plot_3D_axes(bin_width1, bin_width2, x, y):
     fig = plt.figure(figsize=(10, 10), dpi=80, facecolor='w', edgecolor='k')
     ax = Axes3D(fig)
     #Add text and labels to figures
-    ax.text2D(0.05, 0.95, hist_file, transform=ax.transAxes, fontsize=20)
+    #ax.text2D(0.05, 0.95, hist_file, transform=ax.transAxes, fontsize=20)
     ax.set_xlabel('Magnitude', fontsize=16, labelpad=15)
     ax.set_ylabel('Distance (km)', fontsize=16, labelpad=15)
     ax.set_zlabel('% Contibution to Hazard', fontsize=16, labelpad=15)
@@ -170,6 +177,7 @@ def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):
         zstart = 0.0
         for j in np.arange(0,len(blocks),1):
             #indexes of epsilon values
+             
             apoes = z[i+j]
             zstop = apoes
             
@@ -182,10 +190,39 @@ def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):
             exec('reg' + str(j) + ' = plt.Rectangle((0, 0), 1, 1, fc=colors[j])')
             regions.append(eval('reg'+str(j)))
             
-            blockstr = [r'$\epsilon$: '+str(block) for block in blocks] 
+            blockstr = [r'$\epsilon$: '+str(np.round(block,2)) for block in blocks] 
     
-    legend = ax.legend(regions, blockstr, title='Legend', borderaxespad=1, fontsize=12)
+    legend = ax.legend(regions, blockstr, title='Epsilon', borderaxespad=1, fontsize=12)
     legend.get_title().set_fontsize('14')
+    
+    bb = legend.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
+    xOffset = -0.15
+    yOffset = -0.18
+    bb.x0 += xOffset
+    bb.x1 += xOffset
+    bb.y0 += yOffset
+    bb.y1 += yOffset
+    legend.set_bbox_to_anchor(bb, transform = ax.transAxes)
+    
+def add_inset_map(fig,site):
+    provinces_50m = cartopy.feature.NaturalEarthFeature('cultural',
+                                             'admin_1_states_provinces_lines',
+                                             '50m',
+                                             facecolor='none')
+    water_inset = cartopy.feature.NaturalEarthFeature('physical', 'ocean', '50m',
+                                            edgecolor='face',
+                                            facecolor='lightgray') 
+                                    
+    ax_ins = fig.add_axes([0.15, 0.61, 0.25, 0.2],
+                              projection=ccrs.PlateCarree())
+    #hard coded for now... Values give a good over view of Australia
+    ax_ins.set_extent([111,156,-45,0])
+    ax_ins.plot(site[0],site[1], 's', ms=8, markeredgecolor='k', markerfacecolor='red')
+    
+    ax_ins.add_feature(provinces_50m, edgecolor='gray')
+    ax_ins.add_feature(water_inset)
+    ax_ins.add_feature(cartopy.feature.COASTLINE)
+
     
 if __name__ == "__main__":
     main()
