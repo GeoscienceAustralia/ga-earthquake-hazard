@@ -18,7 +18,7 @@ from palettable.colorbrewer.qualitative import Set1_5
 
 colors = Set1_5.hex_colors
 
-hist_file = 'rlz-34-SA(2.0)-sid-0-poe-0_Mag_Dist_Eps_1.csv'
+hist_file = 'rlz-32-SA(1.0)-sid-0-poe-0_Mag_Dist_Eps_1_poe_0.02.csv'
 site = [130.83, -12.45]
 
 #some plotting flags.  

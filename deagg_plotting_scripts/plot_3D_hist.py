@@ -28,7 +28,9 @@ from palettable.colorbrewer.qualitative import Paired_11
 
 colors = Paired_11.hex_colors
 
-hist_file = 'rlz-18-SA(2.0)-sid-0-poe-0_Mag_Lon_Lat_1_0.5bins.csv'
+#colors = ('#a020f0', '#8a2be2', '#483d8b', '#000080', '#0000ff', '#4682b4', '#00ced1', '#00ffff', '#66cdaa', '#2e8b57', '#006400', '#228b22', '#7cfc00', '#ffff00', '#ffd700', '#ff8c00', '#ff4500', '#ff0000', '#b22222', '#cd5c5c', '#ff69b4', '#ff1493', '#ffc0cb', '#bebebe', '#708090', '#2f4f4f', '#000000', '#eedd82')
+
+hist_file = 'rlz-33-SA(0.2)-sid-0-poe-0_Mag_Lon_Lat_1_poe_0.1.csv'
 site = [130.83, -12.45]
 
 GA_logo = False
@@ -232,6 +234,9 @@ def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):
 
     regions = []
     
+    if len(blocks) > len(colors):
+        sys.exit("Not enough colours specified - change global variable")
+    
     #1. Loop through cells (i)
     #2. Loop through all blocks in each cell (j).  
     
@@ -246,7 +251,8 @@ def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):
                 pl = ax.bar3d(xy[i,0], xy[i,1], 
                           zstart, dx[k]*0.6, dy[k]*0.6, zstop,
                           color=colors[j],zorder=ranks[k],zsort='average')
-
+                # this is the function that sorts bars
+                # inactive at the moment due to map plotting over the top!
                 #pl._sort_zpos = zmax - ranks[::-1][k]
 
                 #pl._sort_zpos = 0      
