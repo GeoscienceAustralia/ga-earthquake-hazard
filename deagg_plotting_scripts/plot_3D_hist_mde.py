@@ -7,6 +7,8 @@ Created on Wed Aug 21 13:24:36 2019
 
 #NOTE: Must use matplotlib version 3.1.1 in python 3.7 or
 #you will get artist board errors when plotting.  
+import os, sys
+
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import matplotlib.image as image
@@ -16,18 +18,17 @@ import cartopy.feature
 
 from palettable.colorbrewer.qualitative import Set1_5
 
-colors = Set1_5.hex_colors
-
-hist_file = 'rlz-32-SA(1.0)-sid-0-poe-0_Mag_Dist_Eps_1_poe_0.02.csv'
-site = [130.83, -12.45]
+COLORS = Set1_5.hex_colors
 
 #some plotting flags.  
 GA_logo = False
 Inset_map = False
-          
-def main():
+       
+def main(argv):
     
-    x, y, z, dy, dx, xpos, ypos, dxs, dys, zsum, p_norm, epsilons, n, mag, dist = read_csv(hist_file)
+    hist_file = sys.argv[1]
+    params = set_deagg_info(hist_file)
+    x, y, z, dy, dx, xpos, ypos, dxs, dys, zsum, p_norm, epsilons, n, mag, dist = read_csv(argv)
     bin_width1, bin_width2 = def_get_bin_widths(x,y)
     fig, ax = plot_3D_axes(bin_width1, bin_width2, x, y)
     ranks, zmax = define_camera(xpos, ypos, zsum, ax)
@@ -37,13 +38,40 @@ def main():
     if GA_logo:
         add_GA_logo(fig)
     if Inset_map:
-        add_inset_map(fig,site)
+        add_inset_map(fig,params["site_loc"])
+        
+    figfile = "%s_SA(%s)_poe_%s_%s.png"  %(params["site_name"], 
+                                           params["SA"], 
+                                           params["poe"],
+                                           params["deagg"])
     
-    fig.savefig('samplefigure2_2',bbox_inches='tight',dpi=240)
-    #plt.show()
-          
+    fig.savefig(figfile,bbox_inches='tight',dpi=240, transparent=True)    
+
     
 ###############################################################################
+def set_deagg_info(hist_file):
+    params = {}
+    SA_i = hist_file.find("SA")
+    poe_i = hist_file.find("poe_")
+    
+    params["SA"] = hist_file[SA_i+3:SA_i+6]
+    params["poe"] = hist_file[poe_i+4:poe_i+8]
+    params["site_name"] = os.getcwd().split('\\')[-2]
+    params["deagg"] = os.getcwd().split('\\')[-1]
+    
+    loc_file = "../../nsha_localities.txt"
+    locs = []
+    with open(loc_file, 'r') as f:
+        for i,line in enumerate(f.readlines()):
+            line = line.strip('\n')  
+            locs.append(line)
+            if line == params["site_name"]:
+                val = i
+    params["site_loc"] = [locs[val+1], locs[val+2]]
+    
+    return params
+
+
 def sph2cart(r, theta, phi):
     '''spherical to Cartesian transformation.'''
     x = r * np.sin(theta) * np.cos(phi)
@@ -51,13 +79,13 @@ def sph2cart(r, theta, phi):
     z = r * np.cos(theta)
     return x, y, z
 
+
 def sphview(ax):
     '''returns the camera position for 3D axes in spherical coordinates'''
     r = np.square(np.max([ax.get_xlim(), ax.get_ylim()], 1)).sum()
     theta, phi = np.radians((90-ax.elev, ax.azim))
     return r, theta, phi
-#
-# end of apodemus's code
+
 
 def getDistances(view, xpos, ypos, dz):
     distances  = []
@@ -66,6 +94,7 @@ def getDistances(view, xpos, ypos, dz):
         distance = (a[0, i] - view[0])**2 + (a[1, i] - view[1])**2 + (a[2, i] - view[2])**2
         distances.append(np.sqrt(distance))
     return distances
+
           
 def read_csv(hist_file):
     '''
@@ -115,6 +144,7 @@ def def_get_bin_widths(x,y):
     
     return bin_width1, bin_width2
 
+
 def add_GA_logo(fig):
     '''
     Insert the GA logo on the bottom using imshow.  
@@ -129,6 +159,7 @@ def add_GA_logo(fig):
     #im = im[...,::-1]  # set the alpha channel
     ax_im.imshow(im,cmap='Greys_r')
     plt.subplots_adjust(bottom=0.7)
+    
 
 def plot_3D_axes(bin_width1, bin_width2, x, y):
    
@@ -144,6 +175,7 @@ def plot_3D_axes(bin_width1, bin_width2, x, y):
     
     return fig, ax
 
+
 def define_camera(xpos, ypos, zsum, ax):
     ax.view_init(azim=110, elev=20)
     x1, y1, z1 = sph2cart(*sphview(ax))
@@ -158,6 +190,7 @@ def define_camera(xpos, ypos, zsum, ax):
 
     return ranks, zmax
 
+
 def set_zaxes(zsum, ax):
     zlim = np.ceil(np.amax(zsum) * 10.) / 10.
     ax.set_zlim3d(bottom=0, top=zlim, emit=True, auto=False)
@@ -169,6 +202,9 @@ def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):
     xy = np.column_stack((x,y))
 
     regions = []
+    
+    if len(blocks) > len(COLORS):
+        sys.exit("Not enough colours specified - change global variable")
     
     #1. Loop through cells (i)
     #2. Loop through all blocks in each cell (j).  
@@ -184,10 +220,10 @@ def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):
             if apoes > 0:
                 pl = ax.bar3d(xy[i,0], xy[i,1], 
                           zstart, dx[k]*0.6, dy[k]*0.6, zstop,
-                          color=colors[j],zorder=ranks[k],zsort='max')
+                          color=COLORS[j],zorder=ranks[k],zsort='max')
                 pl._sort_zpos = zmax - ranks[::-1][k]
             zstart += zstop
-            exec('reg' + str(j) + ' = plt.Rectangle((0, 0), 1, 1, fc=colors[j])')
+            exec('reg' + str(j) + ' = plt.Rectangle((0, 0), 1, 1, fc=COLORS[j])')
             regions.append(eval('reg'+str(j)))
             
             blockstr = [r'$\epsilon$: '+str(np.round(block,2)) for block in blocks] 
@@ -204,6 +240,7 @@ def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):
     bb.y1 += yOffset
     legend.set_bbox_to_anchor(bb, transform = ax.transAxes)
     
+    
 def add_inset_map(fig,site):
     provinces_50m = cartopy.feature.NaturalEarthFeature('cultural',
                                              'admin_1_states_provinces_lines',
@@ -217,7 +254,9 @@ def add_inset_map(fig,site):
                               projection=ccrs.PlateCarree())
     #hard coded for now... Values give a good over view of Australia
     ax_ins.set_extent([111,156,-45,0])
-    ax_ins.plot(site[0],site[1], 's', ms=8, markeredgecolor='k', markerfacecolor='red')
+    ax_ins.plot(np.float(site[0]),np.float(site[1]), 
+                       's', ms=8, markeredgecolor='k', 
+                        markerfacecolor='red')
     
     ax_ins.add_feature(provinces_50m, edgecolor='gray')
     ax_ins.add_feature(water_inset)
@@ -225,7 +264,7 @@ def add_inset_map(fig,site):
 
     
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1])
 
       
 

@@ -26,18 +26,18 @@ import numpy as np
 
 from palettable.colorbrewer.qualitative import Paired_11
 
-colors = Paired_11.hex_colors
+COLORS = Paired_11.hex_colors
 
 #colors = ('#a020f0', '#8a2be2', '#483d8b', '#000080', '#0000ff', '#4682b4', '#00ced1', '#00ffff', '#66cdaa', '#2e8b57', '#006400', '#228b22', '#7cfc00', '#ffff00', '#ffd700', '#ff8c00', '#ff4500', '#ff0000', '#b22222', '#cd5c5c', '#ff69b4', '#ff1493', '#ffc0cb', '#bebebe', '#708090', '#2f4f4f', '#000000', '#eedd82')
-
-hist_file = 'rlz-33-SA(0.2)-sid-0-poe-0_Mag_Lon_Lat_1_poe_0.1.csv'
-site = [130.83, -12.45]
 
 GA_logo = False
 Inset_map = False
           
-def main():
+def main(argv):
+    
+    hist_file = sys.argv[1]
     #Run functions to read file and create data.  
+    params = set_deagg_info(hist_file)
     x, y, z, dy, dx, xpos, ypos, dxs, dys, zsum, p_norm, mags, n, lon, lat = read_csv(hist_file)
     bin_width1, bin_width2 = def_get_bin_widths(x,y)
     fig, ax, llcrnrlon, urcrnrlon, llcrnrlat, urcrnrlat = plot_3D_axes(bin_width1, bin_width2, x, y)
@@ -49,13 +49,40 @@ def main():
     if GA_logo:
         add_GA_logo(fig)
     if Inset_map:
-        add_inset_map(fig,site)
+        add_inset_map(fig,params["site_loc"])
     
-    print("Saving figure...")
-    fig.savefig('samplefigure2_3',bbox_inches='tight',dpi=240)
+    figfile = "%s_SA(%s)_poe_%s_%s.png"  %(params["site_name"], 
+                                           params["SA"], 
+                                           params["poe"],
+                                           params["deagg"])
+    
+    fig.savefig(figfile,bbox_inches='tight',dpi=240, transparent=True)   
     #plt.show()
 
 ###############################################################################       
+def set_deagg_info(hist_file):
+    params = {}
+    SA_i = hist_file.find("SA")
+    poe_i = hist_file.find("poe_")
+    
+    params["SA"] = hist_file[SA_i+3:SA_i+6]
+    params["poe"] = hist_file[poe_i+4:poe_i+8]
+    params["site_name"] = os.getcwd().split('\\')[-2]
+    params["deagg"] = os.getcwd().split('\\')[-1]
+    
+    loc_file = "../../nsha_localities.txt"
+    locs = []
+    with open(loc_file, 'r') as f:
+        for i,line in enumerate(f.readlines()):
+            line = line.strip('\n')  
+            locs.append(line)
+            if line == params["site_name"]:
+                val = i
+    params["site_loc"] = [locs[val+1], locs[val+2]]
+    
+    return params
+
+
 def sph2cart(r, theta, phi):
     '''spherical to Cartesian transformation.'''
     x = r * np.sin(theta) * np.cos(phi)
@@ -63,13 +90,13 @@ def sph2cart(r, theta, phi):
     z = r * np.cos(theta)
     return x, y, z
 
+
 def sphview(ax):
     '''returns the camera position for 3D axes in spherical coordinates'''
     r = np.square(np.max([ax.get_xlim(), ax.get_ylim()], 1)).sum()
     theta, phi = np.radians((90-ax.elev, ax.azim))
     return r, theta, phi
-#
-# end of apodemus's code
+
 
 def getDistances(view, xpos, ypos, dz):
     distances  = []
@@ -79,6 +106,7 @@ def getDistances(view, xpos, ypos, dz):
         distances.append(np.sqrt(distance))
     return distances
           
+
 def read_csv(hist_file):
     '''
     reads mll csv files from deag output and sets up
@@ -118,6 +146,7 @@ def read_csv(hist_file):
 
     return x, y, z, dy, dx, xpos, ypos, dxs, dys, zsum, p_norm, mags, n_cells, lon, lat
  
+    
 def def_get_bin_widths(x,y):
     '''Get the width of the lon/lat bins
     '''
@@ -125,6 +154,7 @@ def def_get_bin_widths(x,y):
     bin_width2 = np.diff(y)[0]
     return bin_width1, bin_width2
     
+
 def add_GA_logo(fig):
     '''
     Insert the GA logo on the bottom using imshow.  
@@ -142,6 +172,7 @@ def add_GA_logo(fig):
     #test save
     # note the 'tight' argument as this makes sure the 
     # logo actually plots on the figure.  
+    
     
 def add_feature3d(ax, feature, clip_geom=None, zs=None):
     """
@@ -186,6 +217,7 @@ def add_feature3d(ax, feature, clip_geom=None, zs=None):
 
     ax.add_collection3d(lc, zs=zs)  
     
+    
 def plot_3D_axes(bin_width1, bin_width2, x, y):
     llcrnrlon = x[0] - bin_width1 
     llcrnrlat = y[0] - bin_width2 
@@ -205,6 +237,7 @@ def plot_3D_axes(bin_width1, bin_width2, x, y):
     
     return fig, ax, llcrnrlon, urcrnrlon, llcrnrlat, urcrnrlat
 
+
 def define_camera(xpos, ypos, zsum, ax):
     ax.view_init(azim=-70, elev=20)
     x1, y1, z1 = sph2cart(*sphview(ax))
@@ -220,6 +253,7 @@ def define_camera(xpos, ypos, zsum, ax):
 
     return ranks, zmax
 
+
 def set_zaxes(zsum, ax):
     zlim = np.ceil(np.amax(zsum) * 100.) / 100.
     ax.set_zlim3d(bottom=0, top=zlim, emit=True, auto=False)
@@ -228,13 +262,12 @@ def set_zaxes(zsum, ax):
     ax.set_zticklabels(zlabels)
 
 
-
 def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):    
     xy = np.column_stack((x,y))
 
     regions = []
     
-    if len(blocks) > len(colors):
+    if len(blocks) > len(COLORS):
         sys.exit("Not enough colours specified - change global variable")
     
     #1. Loop through cells (i)
@@ -250,14 +283,14 @@ def plot_bars(x, y, z, blocks, ax, dx, dy, ranks, zmax):
             if apoes > 0:
                 pl = ax.bar3d(xy[i,0], xy[i,1], 
                           zstart, dx[k]*0.6, dy[k]*0.6, zstop,
-                          color=colors[j],zorder=ranks[k],zsort='average')
+                          color=COLORS[j],zorder=ranks[k],zsort='average')
                 # this is the function that sorts bars
                 # inactive at the moment due to map plotting over the top!
                 #pl._sort_zpos = zmax - ranks[::-1][k]
 
                 #pl._sort_zpos = 0      
             zstart += zstop
-            exec('reg' + str(j) + ' = plt.Rectangle((0, 0), 1, 1, fc=colors[j])')
+            exec('reg' + str(j) + ' = plt.Rectangle((0, 0), 1, 1, fc=COLORS[j])')
             regions.append(eval('reg'+str(j)))
             
             blockstr = ['M: '+str(block) for block in blocks] 
@@ -295,6 +328,7 @@ def add_3d_stuff(ax, llcrnrlon, urcrnrlon, llcrnrlat, urcrnrlat):
                                             clip_geom, zs=zbase) 
     plt.close(proj_ax.figure)
 
+
 def add_inset_map(fig,site):
     provinces_50m = cartopy.feature.NaturalEarthFeature('cultural',
                                              'admin_1_states_provinces_lines',
@@ -308,14 +342,16 @@ def add_inset_map(fig,site):
                               projection=ccrs.PlateCarree())
     #hard coded for now... Values give a good over view of Australia
     ax_ins.set_extent([111,156,-45,0])
-    ax_ins.plot(site[0],site[1], 's', ms=8, markeredgecolor='k', markerfacecolor='red')
+    ax_ins.plot(np.float(site[0]), np.float(site[1]), 
+                's', ms=8, markeredgecolor='k', 
+                 markerfacecolor='red')
     
     ax_ins.add_feature(provinces_50m, edgecolor='gray')
     ax_ins.add_feature(water_inset)
     ax_ins.add_feature(cartopy.feature.COASTLINE)
     
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1])
     
 
 
