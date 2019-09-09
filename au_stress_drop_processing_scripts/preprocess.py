@@ -5,11 +5,16 @@ Created on Wed Sep 04 10:25:51 2019
 @author: u93322
 """
 
+import sys
+
 import matplotlib.pyplot as plt
+import numpy as np
+
 from obspy import read, read_inventory
 from obspy.taup import TauPyModel
 from obspy.geodetics import locations2degrees
 from obspy import UTCDateTime
+#from obspy.signal import freqattributes
 
 # event information as global variables. 
 DEPTH = 0.0 # from event download or eq file
@@ -19,16 +24,34 @@ ORIGIN = UTCDateTime("2016-05-20T18:14:02")
 # process and remove response for one seismogram first
 
 def main():
+    # PART1: Pre-process
     # read in observation stream
-    obs = read("*.mseed")
+    obs = read("*AU.TOO*.mseed")
     obs_new = set_up_traces(obs)
     obs_resampled = resample_stream(obs_new)
     obs_decon = remove_instrument_response(obs_resampled)
     
+    # output preprocessed data before signal to noise ratio
+    # and removal of misaligned events takes places
     for tr in obs_decon:
-        obs_decon.write(tr.id +'.mseed.PREPROC', format='MSEED')
+        tr.write(tr.id +'.sac.PREPROC', format='SAC')
+    
+    #PART2: Station selection    
+    # use previous traces not reread so p arrival isn't lost. 
+    tr_noise, tr_signal = get_noise_and_signal(obs_decon)
+    # compute noise spectrum
+    band1_n, band2_n, band3_n = calculate_smoothed_spectrum(tr_noise,  plot=True)
+    # compute signal spectrum
+    band1_s, band2_s, band3_s = calculate_smoothed_spectrum(tr_signal, plot=True)
 
 ###############################################################################
+def get_ttimes(phase, gcarc, model='iasp91'):
+        model = TauPyModel(model=model)
+        arrivals = model.get_travel_times(source_depth_in_km=DEPTH,
+                                       distance_in_degree=gcarc,
+                                       phase_list=[phase])
+        arr = arrivals[0]
+        return arr
 
 
 def set_up_traces(st):
@@ -62,15 +85,10 @@ def set_up_traces(st):
         # distance between soruce and receiver (for predicted tt)
         gcarc = locations2degrees(ELAT, ELON, slat, slon)
         
-        # calcuate predicted arrival times and cut traces
-        model = TauPyModel(model="iasp91")
-        arrivals = model.get_travel_times(source_depth_in_km=DEPTH,
-                                       distance_in_degree=gcarc,
-                                      phase_list=["P"])
-        arr = arrivals[0]    
+        p = get_ttimes("P", gcarc, model='iasp91')
         # save P wave arrival as trace attribute
         tr.stats["parrival"] = {}
-        tr.stats["parrival"] = arr.time
+        tr.stats["parrival"] = p.time
 
     return new_st
 
@@ -123,6 +141,77 @@ def remove_instrument_response(st, plot=False):
         tr.taper(0.05, type='hann', max_length=30., side='both')
         
         return new_st
+    
+    
+def get_noise_and_signal(st):
+    """ Slice traces into signal and noise parts for frequency analysis.  
+    """
+    for tr in st:
+        
+        pval = tr.stats.get('parrival', None)
+        if pval == None:
+            sys.exit("No p arrival entry for trace! Recompute p arrival.")
+        
+        
+        pUTC = ORIGIN + tr.stats.parrival
+        start = pUTC - 52.1
+        end = pUTC + 52.1
+    
+        tr_signal = tr.slice(pUTC, end)
+        tr_noise = tr.slice(start, pUTC)
+        
+        return tr_signal, tr_noise
+        
+
+def calculate_smoothed_spectrum(tr, Fs=10.0, plot=False, window=21):
+    
+    """ Function calcualtes the smoothed spectrum for the three frequency
+    bands defined in Allmann & Shearer 2008 for signal to noise ratio.  
+    Returns three arrays of spectral amplitudes for each band.  
+    """
+    
+    from scipy.signal import savgol_filter
+        
+    band1 = np.logspace(-1.69, -1, 21) # from 0.02-0.1 Hz
+    band2 = np.logspace(-1, -0.397, 21) # from 0.1-0.4 Hz
+    band3 = np.logspace(-0.397, 0.301, 21) # from 0.4-2 Hz
+    
+    Fs = 10.0;  # sampling rate
+
+    time_amps = tr.data
+    
+    n = len(time_amps) # length of the signal
+    k = np.arange(n)
+    T = n/Fs
+    frq = k/T # two sides frequency range
+    frq = frq[range(n/2)] # one side frequency range
+    
+    spec_amps = np.fft.fft(time_amps)/n # fft computing and normalization
+    spec_amps = abs(spec_amps[range(n/2)]) # take half absolut values
+    
+    smoothed_spec = np.exp(savgol_filter(np.log(spec_amps), window, 3))
+    
+    smoothed_interp_band1 = np.exp(np.interp(np.log(band1), \
+                                            np.log(frq), \
+                                            np.log(smoothed_spec), \
+                                            left=np.nan, right=np.nan))
+    smoothed_interp_band2 = np.exp(np.interp(np.log(band2), \
+                                            np.log(frq), \
+                                            np.log(smoothed_spec), \
+                                            left=np.nan, right=np.nan))
+    smoothed_interp_band3 = np.exp(np.interp(np.log(band3), \
+                                            np.log(frq), \
+                                            np.log(smoothed_spec), \
+                                            left=np.nan, right=np.nan))
+    if plot:
+        # option to plot spectra for the three bands to troubleshoot
+        fig, ax = plt.subplots(1, 1)
+        ax.loglog(frq, spec_amps,zorder=1, color='b')
+        ax.loglog(band1, smoothed_interp_band1, color='r')
+        ax.loglog(band2, smoothed_interp_band2, color='g')
+        ax.loglog(band3, smoothed_interp_band3, color='y')
+        
+    return smoothed_interp_band1, smoothed_interp_band2, smoothed_interp_band3
 
 
 def compare_seismograms(tr1, tr2, start=0, stop=2000):
@@ -164,7 +253,8 @@ if __name__ == "__main__":
 
 
 
-
+    
+    
 
 
 
