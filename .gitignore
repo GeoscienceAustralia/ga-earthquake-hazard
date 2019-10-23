@@ -1,0 +1,19 @@
+# Specific file types
+*.qgz
+*.xls*
+*.doc*
+*.jpg
+*.png
+
+#visual studio code
+.idea
+.vscode
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+
