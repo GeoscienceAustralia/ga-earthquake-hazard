@@ -1,6 +1,0 @@
-job_file   = test_job/job.ini
-job_number = 655
-gm_period  = 1.0
-poe        = 0.02 
-disagg_out = out/
-
