@@ -1,0 +1,8 @@
+# The 2012 Moe Earthquake Sequence, Southeastern Australia
+
+This archive provides data and codes used in the production of the manuscript "The 2012 Moe Earthquake Sequence, Southeastern Australia" by Ryan Hoult, Anita Amirsardari, Trevor Allen, Elodie Borleis, Wayne Peck, submitted to the journal Seismological Reserach Letters.  Sub-folders include:
+
+- **mmi_data:** raw and processed macroseismic intensity data used for the production of the ShakeMap for the 19 June 2012 MW 5.17 Moe main shock
+- **fourier_spectra:** Caclualted Fourier displacement spectra (in units of m-s) of the S-wave, vertical component coda for the two largest earthquakes in the 2012 Moe earthquake sequence. Sub-folders for the two events are denoted by the earthquakes' origin times in %Y%m%d%H%M format.
+- **response_spectra:** Calculated response spectral acceleration (in units of g) for the horizontal-component records for each recording site for the two largest earthquakes in the 2012 Moe earthquake sequence. Sub-folders for the two events are denoted by the earthquakes' origin times in %Y%m%d%H%M format.
+- **gsim:** Python codes that calculate the [Tang et al (2019)](https://www.mdpi.com/2076-3263/9/10/422/htm) ground-motion model and the [Atkinson et al (2014)](https://pubs.geoscienceworld.org/ssa/bssa/article/104/6/3084/332154/Intensity-Prediction-Equations-for-North) intensity prediction equation.  Both codes can be fully integrated with the [OpenQuake-engine hazardlib](https://github.com/gem/oq-engine/tree/master/openquake/hazardlib) and [USGS's ShakeMap](https://usgs.github.io/shakemap/) software

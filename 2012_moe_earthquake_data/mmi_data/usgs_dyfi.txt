@@ -1,0 +1,58 @@
+Location	MMI	Responses	Distance
+Moe-Yallourn, Victoria Australia	V	323	13
+Morwell, Victoria Australia	V	158	20
+Warragul, Victoria Australia	V	245	26
+Traralgon, Victoria Australia	V	217	31
+Wonthaggi, Victoria Australia	IV	200	67
+Pakenham, Victoria Australia	IV	457	73
+Sale, Victoria Australia	III	1	77
+Sale, Victoria Australia	IV	163	77
+Cranbourne, Victoria Australia	IV	673	82
+Hastings, Victoria Australia	IV	144	88
+Healesville, Victoria Australia	IV	398	88
+Somerville, Victoria Australia	IV	188	90
+Crib Point, Victoria Australia	IV	47	104
+Melbourne, Victoria Australia	III	64	118
+Melbourne, Victoria Australia	IV	7485	118
+Bairnsdale, Victoria Australia	III	1	132
+Bairnsdale, Victoria Australia	IV	175	132
+Craigieburn, Victoria Australia	IV	246	132
+Clifton Springs, Victoria Australia	III	31	142
+Ocean Grove-Barwon Heads, Victoria Australia	IV	35	146
+Sunbury, Victoria Australia	IV	270	150
+Leopold, Victoria Australia	III	11	152
+Melton, Victoria Australia	IV	213	155
+Lara, Victoria Australia	III	28	158
+Lakes Entrance, Victoria Australia	III	52	163
+Geelong, Victoria Australia	II	1	164
+Geelong, Victoria Australia	III	287	164
+Baccus Marsh, Victoria Australia	III	108	167
+Benalla, Victoria Australia	IV	142	189
+Wangaratta, Victoria Australia	III	178	209
+Castlemaine, Victoria Australia	III	64	218
+Shepparton-Mooroopna, Victoria Australia	IV	329	219
+Ballarat, Victoria Australia	II	1	220
+Ballarat, Victoria Australia	II	75	220
+Bendigo, Victoria Australia	III	84	236
+Kyabram, Victoria Australia	III	87	236
+Wodonga, Victoria Australia	III	160	242
+Yarrawonga-Mulwala, Victoria Australia	III	38	247
+Corowa, New South Wales Australia	II	6	249
+Albury, New South Wales Australia	III	65	251
+Maryborough, Victoria Australia	IV	5	254
+Echuca-Moama, Victoria Australia	III	76	267
+Ararat, Victoria Australia	IV	44	307
+Deniliquin, New South Wales Australia	II	7	321
+Cooma, New South Wales Australia	III	1	342
+Wagga Wagga, New South Wales Australia	II	1	361
+Tumut, New South Wales Australia	III	2	372
+Swan Hill, Victoria Australia	II	9	400
+Canberra, Australian Capital Territory Australia	III	19	418
+Queanbeyan, New South Wales Australia	II	2	419
+Batemans Bay, New South Wales Australia	III	2	454
+Ulladulla, New South Wales Australia	III	2	498
+Kingston-Blackmans Bay, Tasmania Australia	II	2	535
+Wollongong, New South Wales Australia	II	4	597
+Sydney, New South Wales Australia	III	11	663
+Port Augusta, South Australia Australia	IV	4	996
+Torquay, Victoria Australia	III	37	1570
