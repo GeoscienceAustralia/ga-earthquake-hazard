@@ -1,4 +1,4 @@
-# The 2012 Moe Earthquake Sequence, Southeastern Australia
+# A Pragmatic Approach to Adjusting Historical Local Magnitudes for Seismic Hazard Assessments in Australia
 
 This archive provides data and codes used in the production of the manuscript "A Pragmatic Approach to Adjusting Historical Local Magnitudes for Seismic Hazard Assessments in Australia" by Trevor I Allen, submitted to the Journal of Seismology.  Files include:
 
