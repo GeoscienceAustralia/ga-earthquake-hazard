@@ -3,5 +3,24 @@
 This archive provides data and codes used in the production of the manuscript "Far-field ground-motion model for the North Australian Craton from plate margin earthquakes" by Trevor I Allen, submitted to the Bulletin of the Seismological Society of America.  Files include:
 
 - **event_table.csv:** List of earthquake parameters and number of recordings used in this study.
-- **nac_flatfile.csv:** File containing the ground-motion intensity measures for all recordings used in this study.
+- **base_model_flatfile.csv:** File containing the ground-motion intensity measures for recordings used in the development of the base ground-motion model coefficients. The table below provides a description of the flatfile attributes.
+- **base_amp_model_flatfile.csv:** File containing the ground-motion intensity measures for recordings used in the development of the amplification model coefficients. The table below provides a description of the flatfile attributes.
+
+| ATTRIBUTE | DESCRIPTION |
+| --------- | ----------- |
+| ORIGIN_TIME | Origin time of earthquake |
+| LON | Earthquake longitude |
+| LAT | Earthquake latitude |
+| DEPTH | Earthquake hypocentral depth |
+| MW | Moment magnitude |
+| STA | Station code |
+| NET | FDSN network code |
+| INST_TY | Instrument type: BH* = low-sample-rate BB; HH* = high-sample-rate BB; SH* = low-sample-rate SP |
+| DEPTH | Earthquake hypocentral depth |
+| VS30 | Time averaged shear-wave velocity in the upper 30 m of the site foundation |
+| RHYP | Hypocentral distance (km) |
+| AZIM | Source-to-receiver azimuth (degrees) |
+| PGV | Peak ground velocity (cm/s) |
+| PGA | Peak ground velocity (g) |
+| T*X* | Geometric mean of five-percent damped spectral acceleration for the horizontal components for a period of *X* seconds |
 
