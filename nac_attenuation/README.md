@@ -15,7 +15,7 @@ This archive provides data and codes used in the production of the manuscript "F
 | MW | Moment magnitude |
 | STA | Station code |
 | NET | FDSN network code |
-| INST_TY | Instrument type: BH* = low-sample-rate BB; HH* = high-sample-rate BB; SH* = low-sample-rate SP |
+| INST_TY | Instrument type: BH* = low-sample-rate broadband; HH* = high-sample-rate broadband; SH* = low-sample-rate short period; HN* = high-sample-rate strong motion |
 | DEPTH | Earthquake hypocentral depth |
 | VS30 | Time averaged shear-wave velocity in the upper 30 m of the site foundation |
 | RHYP | Hypocentral distance (km) |
