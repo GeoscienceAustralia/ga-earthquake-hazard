@@ -1,4 +1,4 @@
-# A far-Field Ground-Motion Model for the North Australian Craton from Plate Margin Earthquakes
+# A Far-Field Ground-Motion Model for the North Australian Craton from Plate Margin Earthquakes
 
 This archive provides data and codes used in the production of the manuscript "A far-field ground-motion model for the North Australian Craton from plate margin earthquakes" by Trevor I Allen, submitted to the Bulletin of the Seismological Society of America.  Files include:
 
