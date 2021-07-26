@@ -20,7 +20,7 @@ This archive provides data and codes used in the production of the manuscript "F
 | VS30 | Time averaged shear-wave velocity in the upper 30 m of the site foundation |
 | RHYP | Hypocentral distance (km) |
 | AZIM | Source-to-receiver azimuth (degrees) |
-| PGV | Peak ground velocity (cm/s) |
-| PGA | Peak ground velocity (g) |
-| T*X* | Geometric mean of five-percent damped spectral acceleration for the horizontal components for a period of *X* seconds |
+| PGV | Peak ground velocity in units of cm/s) |
+| PGA | Peak ground velocity in units of g |
+| T*X* | Geometric mean of five-percent damped spectral acceleration for the horizontal components for a period of *X* seconds in units of g |
 
