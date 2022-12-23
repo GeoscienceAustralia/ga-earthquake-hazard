@@ -11,7 +11,7 @@ This archive provides data used in the production of the manuscript "Exploring A
 | ORIGIN_TIME | Origin time of earthquake |
 | LON | Earthquake longitude (degrees) |
 | LAT | Earthquake latitude (degrees) |
-| DEPTH | Earthquake hypocentral depth (km) |
+| DEP | Earthquake hypocentral depth (km) |
 | MW | Moment magnitude |
 | PATH | Relative path to ShakeMap input files |
 | FAULT_FILE | Relative path to finite-fault file |
