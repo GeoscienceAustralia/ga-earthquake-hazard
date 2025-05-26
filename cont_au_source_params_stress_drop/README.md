@@ -21,8 +21,8 @@ This archive provides data used in the production of the manuscript "Systematic 
 | BRUNE_MAG_STD | Standard deviation of the moment magnitude from Brune spectral fitting |
 | STRESS_DROP | Stress drop from Brune spectral fitting (MPa) |
 | LOG_STRESS_DROP_STD | Log<sub>10</sub> standard deviation of the stress drop from Brune spectral fitting |
-| CORN_FREQ | Standard deviation of the corner frequency from Brune spectral fitting (Hz) |
-| CORN_FREQ_STD | Corner frequency from Brune spectral fitting (Hz) |
+| CORN_FREQ | Corner frequency from Brune spectral fitting (Hz) |
+| CORN_FREQ_STD | Standard deviation of the corner frequency from Brune spectral fitting (Hz) |
 | NRECS | Number of recordings used for Brune spectral fitting |
 | FMIN | Minimum frequency used to fit Brune spectral model (Hz) |
 | FMAX | Maximum frequency used to fit Brune spectral model (Hz) |
