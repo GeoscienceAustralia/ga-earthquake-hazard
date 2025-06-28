@@ -3,7 +3,7 @@
 This archive provides data used in the production of the manuscript "Systematic Estimation of Earthquake Source Parameters for Continental Australia: Attenuation and Stress Drop" by Trevor I Allen, in review for the Bulletin of the Seismological Society of America.  Files include:
 
 - [brune_source_parameters.csv](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/brune_source_parameters.csv): Summary file of earthquake source parameters calculated in this study. The table below provides a description of table attributes.
-- [atten_coeffs.csv](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/atten_coeffs.csv): Attenuation coefficients used in the evaluation of earthquake source parameters, as applied in Equations 8-11 of the manuscript. The coefficients include the aleeatory variability model, such that $`\sigma_T = \sqrt{\sigma_{be}^2 +\sigma_{we}^2}`$, where,
+- [atten_coeffs.csv](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/atten_coeffs.csv): Attenuation coefficients used in the evaluation of earthquake source parameters, as applied in Equations 8-11 of the manuscript. The coefficients include the aleatory variability model, such that $`\sigma_T = \sqrt{\sigma_{be}^2 +\sigma_{we}^2}`$, where,
 	- $`\sigma_T`$ is the total variability
 	- $`\sigma_{be}`$ is the between-event variability
 	- $`\sigma_{we}`$ is the within-event variability 
@@ -18,8 +18,8 @@ This archive provides data used in the production of the manuscript "Systematic 
 | LON | Earthquake longitude (degrees) |
 | LAT | Earthquake latitude (degrees) |
 | DEP | Earthquake hypocentral depth (km) |
-| OMAG | Origial magnitude as per [Geoscience Australia catalogue](https://earthquakes.ga.gov.au/) |
-| OMAG_TYPE | Origial magnitude type |
+| OMAG | Original magnitude as per [Geoscience Australia catalogue](https://earthquakes.ga.gov.au/) |
+| OMAG_TYPE | Original magnitude type |
 | MB | Body-wave magnitude |
 | BRUNE_MAG | Moment magnitude from Brune spectral fitting |
 | BRUNE_MAG_STD | Standard deviation of the moment magnitude from Brune spectral fitting |
