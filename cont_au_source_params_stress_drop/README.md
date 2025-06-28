@@ -3,8 +3,10 @@
 This archive provides data used in the production of the manuscript "Systematic Estimation of Earthquake Source Parameters for Continental Australia: Attenuation and Stress Drop" by Trevor I Allen, in review for the Bulletin of the Seismological Society of America.  Files include:
 
 - [brune_source_parameters.csv](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/brune_source_parameters.csv): Summary file of earthquake source parameters calculated in this study. The table below provides a description of table attributes.
-- [atten_coeffs.csv](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/atten_coeffs.csv): Attenuation coefficients used in the evaluation of earthquake source parameters, as applied in Equations 8-11 of the manuscript. The coefficients include the aleeatory variability model, such that: 
-	$`\sigma_T = \sqrt{\sigma_{be}^2 +\sigma_{we}^2}`$, 
+- [atten_coeffs.csv](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/atten_coeffs.csv): Attenuation coefficients used in the evaluation of earthquake source parameters, as applied in Equations 8-11 of the manuscript. The coefficients include the aleeatory variability model, such that $`\sigma_T = \sqrt{\sigma_{be}^2 +\sigma_{we}^2}`$, where,
+	- $`\sigma_T`$ is the total variability
+	- $`\sigma_{be}`$ is the between-event variability
+	- $`\sigma_{we}`$ is the within-event variability 
 	
 - [brune_fit](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/brune_fit): Folder containing individual [Brune (1970)](https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/jb075i026p04997) spectral fits to all earthquakes for which source parameters could be resolved in this study
 - [within-event_residuals](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/within-event_residuals): Folder containing within-event residuals. Residuals are plotted against hypocentral distance for a frequency of 1.0 Hz. Individual stations are labelled.
