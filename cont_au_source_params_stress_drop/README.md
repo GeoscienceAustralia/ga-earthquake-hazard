@@ -20,7 +20,6 @@ This archive provides data used in the production of the manuscript "Systematic 
 | DEP | Earthquake hypocentral depth (km) |
 | OMAG | Original magnitude as per the [Geoscience Australia catalogue](https://earthquakes.ga.gov.au/) |
 | OMAG_TYPE | Original magnitude type |
-| MB | Body-wave magnitude |
 | BRUNE_MAG | Moment magnitude from Brune spectral fitting |
 | BRUNE_MAG_STD | Standard deviation of the moment magnitude from Brune spectral fitting |
 | STRESS_DROP | Stress drop from Brune spectral fitting (MPa) |
