@@ -8,7 +8,7 @@ This archive provides data used in the production of the manuscript [Systematic 
 	- $`\sigma_{be}`$ is the between-event variability
 	- $`\sigma_{we}`$ is the within-event variability 
 	
-- [au_stress_drop_supplemental_material.pdf[(https://github.com/GeoscienceAustralia/ga-earthquake-hazard/blob/master/cont_au_source_params_stress_drop/au_stress_drop_supplemental_material.pdf): additional supplemental material including plots of between- and within-event residuals
+- [au_stress_drop_supplemental_material.pdf](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/blob/master/cont_au_source_params_stress_drop/au_stress_drop_supplemental_material.pdf): additional supplemental material including plots of between- and within-event residuals
 - [brune_fit](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/brune_fit): Folder containing individual [Brune (1970)](https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/jb075i026p04997) spectral fits to all earthquakes for which source parameters could be resolved in this study
 - [within-event_residuals](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/within-event_residuals): Folder containing within-event residuals. Residuals are plotted against hypocentral distance for a frequency of 1.0 Hz. Individual stations are labelled.
 
