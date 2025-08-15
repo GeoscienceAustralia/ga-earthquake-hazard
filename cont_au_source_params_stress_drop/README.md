@@ -1,6 +1,6 @@
 # Systematic Estimation of Earthquake Source Parameters for Continental Australia: Attenuation and Stress Drop 
 
-This archive provides data used in the production of the manuscript "Systematic Estimation of Earthquake Source Parameters for Continental Australia: Attenuation and Stress Drop" by Trevor I Allen, published in the Bulletin of the Seismological Society of America.  Files include:
+This archive provides data used in the production of the manuscript [Systematic Estimation of Earthquake Source Parameters for Continental Australia: Attenuation and Stress Drop](https://pubs.geoscienceworld.org/ssa/bssa/article/doi/10.1785/0120250054/660495/Systematic-Estimation-of-Earthquake-Source) by Trevor I Allen, published in the Bulletin of the Seismological Society of America.  Files include:
 
 - [brune_source_parameters.csv](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/brune_source_parameters.csv): Summary file of earthquake source parameters calculated in this study. The table below provides a description of table attributes.
 - [atten_coeffs.csv](https://github.com/GeoscienceAustralia/ga-earthquake-hazard/tree/master/cont_au_source_params_stress_drop/atten_coeffs.csv): Attenuation coefficients used in the evaluation of earthquake source parameters, as applied in Equations 8-11 of the manuscript. The coefficients include the aleatory variability model, such that $`\sigma_T = \sqrt{\sigma_{be}^2 +\sigma_{we}^2}`$, where,
