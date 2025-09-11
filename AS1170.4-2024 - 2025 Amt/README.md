@@ -1,4 +1,4 @@
-# Draft Hazard-Design Factor (Z) Maps and Elastic Design Spectrum for the 2025 Amendment to the AS1170.4:2024
+# Draft Hazard-Design Factor (_Z_) Maps and Elastic Design Spectrum for the 2025 Amendment to the AS1170.4:2024
 
 This archive provides the GIS contours for the draft 2025 Amendment to the AS1170.4:2024. A downloadable [zip file]() contains the vector contours on Esri shapefile, Google Earth and geojson format. High-resolution maps are privided in the [maps]() folder.
 
