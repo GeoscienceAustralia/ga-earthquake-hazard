@@ -22,4 +22,4 @@ This archive provides data used in the production of the manuscript Systematic E
 | NRECS | Number of recordings used for Brune spectral fitting |
 | FMIN | Minimum frequency used to fit Brune spectral model (Hz) |
 | FMAX | Maximum frequency used to fit Brune spectral model (Hz) |
-| CLUSTER | Earthquake cluster in which the event is assigned based on <i>k</i>-means unsuoervised machine learning |
+| CLUSTER | Earthquake cluster in which the event is assigned based on <i>k</i>-means unsupervised machine learning |
