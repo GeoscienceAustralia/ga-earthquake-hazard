@@ -14,7 +14,7 @@ This archive provides data used in the production of the manuscript Systematic E
 | OMAG | Original magnitude as per the [Geoscience Australia catalogue](https://earthquakes.ga.gov.au/) |
 | OMAG_TYPE | Original magnitude type |
 | ML2800 | Local magnitude assuming classical Wood-Anderson instrument calibration as per [Richter (1935)](https://pubs.geoscienceworld.org/ssa/bssa/article/25/1/1/115102/An-instrumental-earthquake-magnitude-scale) |
-| ML2080 | Local magnitude assuming classical Wood-Anderson instrument calibration as per [Uhrhammer and Collins (1990)](https://pubs.geoscienceworld.org/ssa/bssa/article/80/3/702/119366/Synthesis-of-Wood-Anderson-seismograms-from) |
+| ML2080 | Local magnitude assuming revised Wood-Anderson instrument calibration as per [Uhrhammer and Collins (1990)](https://pubs.geoscienceworld.org/ssa/bssa/article/80/3/702/119366/Synthesis-of-Wood-Anderson-seismograms-from) |
 | BRUNE_MAG | Moment magnitude from Brune spectral fitting |
 | BRUNE_MAG_STD | Standard deviation of the moment magnitude from Brune spectral fitting |
 | STRESS_DROP | Stress drop from Brune spectral fitting (MPa) |
@@ -30,11 +30,11 @@ Orginal magnitude types are defined as:
 
 | ABBREVIATION | DESCRIPTION |
 | ------------ | ----------- |
-| mb | Body-wave maggnitude |
+| mb | Body-wave magnitude |
 | ML | Local magnitude |
 | Mw | Moment magnitude as determined by the [National Earthquake Alerts Centre](https://earthquakes.ga.gov.au/) |
-| Mwh | Moment magnitude as determined by [Ghasemi et al. (2016)](https://aees.org.au/wp-content/uploads/2018/06/341-Ghasemi-et-al.pdf) |
+| Mwa | Moment magnitude as determined by [Allen (2012)](https://ecat.ga.gov.au/geonetwork/srv/eng/catalog.search#/metadata/74133) |
+| Mwg | Moment magnitude as determined by [Ghasemi et al. (2016)](https://aees.org.au/wp-content/uploads/2018/06/341-Ghasemi-et-al.pdf) |
 | Mwp | P-phase moment magnitude as determined by the [National Earthquake Alerts Centre](https://earthquakes.ga.gov.au/) |
-| Mwt | Moment magnitude as determined by [Allen (2012)](https://ecat.ga.gov.au/geonetwork/srv/eng/catalog.search#/metadata/74133) |
 
 
