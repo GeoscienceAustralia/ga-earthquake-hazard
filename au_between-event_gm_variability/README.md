@@ -24,6 +24,7 @@ This archive provides data used in the production of the manuscript Systematic E
 | NRECS | Number of recordings used for Brune spectral fitting |
 | FMIN | Minimum frequency used to fit Brune spectral model (Hz) |
 | FMAX | Maximum frequency used to fit Brune spectral model (Hz) |
+| DOMAIN | Neotectonic domain based on [Clark et al. 2011](https://ecat.ga.gov.au/geonetwork/srv/api/records/a05f7892-f6f5-7506-e044-00144fdd4fa6). PRPC = Precambrian cratons and reactivated Proterozoic crust; SOPC = Sprigg Orogen and Phanerozoic accretionary crust; ECPM = extended continental crust and passive margins |
 | CLUSTER | Earthquake cluster in which the event is assigned based on <i>k</i>-means unsupervised machine learning |
 
 Orginal magnitude types are defined as:
